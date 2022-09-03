@@ -1,0 +1,12 @@
+/* home-custom-block-text.liquid */
+.hete-home-custom-text{
+  margin-top: 40px
+}
+/* footer.liquid */
+.hete-section-footer{
+  padding-top: 20px;
+}
+.section-footer__row-lower{
+  padding-bottom: 10px;
+}
+

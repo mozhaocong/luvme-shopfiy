@@ -1,0 +1,413 @@
+<!-- <section class="section section--page page">
+
+   {% if page.url contains 'pages/customer-gallery' 
+      or  page.url contains 'pages/luvme-hair-reviews'
+      
+  
+  %}
+  
+  <div class="container container--tiny" style="max-width:1200px">
+		<div class="section__title section__title--center">
+            
+          {% if page.url contains 'pages/share' %}
+          {% else %}
+          <h1 class="section__title-text h2">{{ page.title }}</h1>
+          {% endif %} 
+        </div>
+
+        <div class="page__content rte">
+      		{{ page.content }}
+    	</div>
+	</div>
+  
+  
+          {% else %}
+  
+  <div class="container container--tiny">
+		<div class="section__title section__title--center">
+            
+          {% if page.url contains 'pages/share' %}
+          {% else %}
+          <h1 class="section__title-text h2">{{ page.title }}</h1>
+          {% endif %} 
+        </div>
+
+        <div class="page__content rte">
+      		{{ page.content }}
+    	</div>
+	</div>
+  {% endif %} 
+</section>
+<div id="fb-root"></div> -->
+
+<script type="text/javascript" src="https://cdn.shopify.com/s/files/1/2465/8681/files/jquery.min_55a41c2c-ff5f-4fed-ad07-644c969cd821.js?v=1626829893"></script>
+<script type="text/javascript" src="https://cdn.shopify.com/s/files/1/2465/8681/files/swiper.min.js?v=1643093833"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.shopify.com/s/files/1/2465/8681/files/swiper.min.css?v=1621066842"/>
+<style type="text/css">
+  * {
+    margin: 0;
+    padding: 0;
+  }
+  a:hover{opacity:1;}
+  
+  .container--tiny{max-width: 100% !important;}
+  .pc_img{display: block;width: 100%;}
+  .yd_img{display: none;}
+  .Series_h4_pc{display: block;}
+  .Series_h4_yd{display: none;}
+  .Market_top{max-width: 1540px;margin:25px auto;text-align: center;}
+  .Market_top h4{display: block;font-size: 24px;text-transform: capitalize !important;font-style:oblique;}
+  .Market_top p{display: block;font-size: 24px;margin-bottom: 10px;text-transform: capitalize !important;font-style:oblique;}
+  .Market_top  .Market_top_list{max-width: 1240px;text-align: center;margin:auto;}
+  .Series{max-width: 1540px;margin:25px auto;text-align: center;}
+  .Series h4{font-size: 24px;margin-bottom: 10px;text-transform: capitalize !important;}
+  .Series .Series_h4{font-size: 32px;}
+  .Series span.Series_list{display: block;width: 150px;height: 3px;background: #772189;text-align: center;margin:0 auto 30px;}
+  .Series .Series_img{margin-bottom:10px;}
+  .Enjoy_top{max-width: 1540px;margin:25px auto 0;text-align: center;}
+  .Enjoy_top h4{display: block;font-size: 24px;margin-bottom: 10px;text-transform: capitalize !important;}
+  .Enjoy_top span.Enjoy_list{display: block;width: 150px;height: 3px;background: #772189;text-align: center;margin:0 auto 10px;}
+  .Enjoy_top .Enjoy_p{margin: auto;text-align: center;font-size:26px;}
+  .Enjoy{max-width: 1540px;margin:10px auto 30px;text-align: center;}
+  .Enjoy .Enjoy_overflow{display:flex;text-align: center;justify-content: space-between;margin-top:20px;}
+  .Enjoy .Enjoy_overflow .Enjoy_btn{width: 24%;}
+  .Enjoy .Enjoy_overflow .Enjoy_btn a{display: block;position: relative;}
+  .Enjoy .Enjoy_overflow .Enjoy_btn span{position: absolute;bottom: 10px;left: 10%;font-size:18px;color:#fff;background:#169bd5;width:80%;border-radius:20px;}
+  
+  .Market_video{width: 50%;display: block;text-align: center;margin:auto;}
+  .Market_video video{margin:20px auto 30px;}
+  .Market_video h4{display: block;font-size: 24px;margin-bottom: 10px;text-transform: capitalize !important;}
+  .Market_video span.Market_video_list{display: block;width: 150px;height: 3px;background: #772189;text-align: center;margin:60px auto 20px;}
+  .carousel{max-width: 1640px;margin:25px auto 0;text-align: center;}
+  .carousel h4{display: block;font-size: 24px;margin-bottom: 10px;text-transform: capitalize !important;}
+  .carousel span.carousel_list{display: block;width: 150px;height: 3px;background: #772189;text-align: center;margin:0 auto 30px;}
+  .carousel .carousel_list_swiper{overflow:hidden;position: relative;}
+  .carousel .carousel_swiper{max-width: 1540px;overflow:hidden;margin: auto;}
+  .Market_cpu_title{max-width: 1540px;margin:0px auto 30px;}
+  .Market_cpu_title .Market_cpu_overflow{display:flex;text-align: center;justify-content: space-between;}
+  .Market_cpu_title .Market_cpu_overflow .Market_btn{width: 24%;}
+  .Market_cpu_title .Market_cpu_overflow .Market_btn a{display: block;}
+  .Market_cpu_title .Market_cpu_overflow .Market_btn .product__title{font-size: 12px; text-align: center; margin-top: 5px;}
+  .Market_cpu_title .Market_cpu_overflow .Market_btn .product__price{text-align: center; margin-top: 1px; margin-bottom: 5px;}
+  .Market_cpu_title .Market_cpu_overflow .Market_btn .product__price .product__price-price .money{color: #ec6a6a;}
+  .Market_cpu_title .Market_cpu_overflow .Market_btn .product__price .product__price-cross{text-decoration: line-through;}
+  .Dodge_list{max-width: 1540px;margin:25px auto 0;text-align: center;}
+  .Dodge_list h4{display: block;font-size: 24px;margin-bottom: 10px;text-transform: capitalize !important;}
+  .Dodge_list span.Fresh_list{display: block;width: 150px;height: 3px;background: #772189;text-align: center;margin:0 auto 30px;}
+  .Dodge_list .Dodge_flex{display:flex;justify-content: space-between;margin-top:20px;}
+  .Dodge_list .Dodge_flex div{display:block;width:49.3%;}
+  .Dodge_list .Dodge_flex div img{display:block;width:100%;}
+  .Dodge_list .Dodge_flex div p{font-size:20px;margin-bottom:0;}
+  .Dodge_list .Dodge_list_p{font-size:22px;padding-top:30px;}
+  .swiper-button-prev{background-image:url(https://cdn.shopify.com/s/files/1/2465/8681/files/3_420f3733-f813-4e8c-9daa-a080a12f8534.png?v=1657250696)}
+  .swiper-button-next{background-image:url(https://cdn.shopify.com/s/files/1/2465/8681/files/2_2fafc51d-578b-459b-bd4c-41487bb7ad1d.png?v=1657250712)}
+  .Market_footer{max-width: 1540px;margin:25px auto;text-align: center;}
+  .Market_footer h2{display: block;font-size: 28px;}
+  .Market_footer h4{font-size: 24px;margin-bottom: 10px;text-transform: capitalize !important;}
+  .Market_footer span.Market_footer_list{display: block;width: 150px;height: 3px;background: #772189;text-align: center;margin:0 auto 30px;}
+  .fixed_footer{width:70%;position: fixed;bottom: 0;z-index: 999;left:15%;}
+  .fixed_footer img{width:100%;}
+  
+  @media (min-width: 1px)and (max-width:750px) {
+    .pc_img{display: none;}
+    .yd_img{display: block;}
+    .Series_h4_pc{display: none;}
+    .Series_h4_yd{display: block;}
+    .Market_top{width: 95%;margin:20px auto;}
+    .Market_top h4{font-size: 14px;}
+    .Market_top p{font-size: 14px;font-style:oblique}
+    .Series{width: 95%;margin:0 auto 20px;}
+  	.Series h4{font-size: 14px;}
+  	.Series span.Series_list{width: 120px;margin:0 auto 20px;}
+    .Series .Series_h4{font-size: 18px;}
+    .Enjoy_top{width:95%;margin:30px auto 0;overflow:auto;}
+    .Enjoy_top h4{font-size: 14px;}
+    .Enjoy_top span.Enjoy_list{width: 120px;margin:0 auto 10px;}
+    .Enjoy_top .Enjoy_p{margin: auto;text-align: center;font-size:16px;}
+    .Enjoy{width:95%;margin:0 auto 30px;overflow:auto;}
+    .Enjoy .Enjoy_overflow{width:1000px;}
+    .Enjoy .Enjoy_overflow .Enjoy_btn{width: 240px;margin-bottom:8px;}
+    .Enjoy .Enjoy_overflow .Enjoy_btn a{display: block;}
+    .Enjoy .Enjoy_overflow .Enjoy_btn span{left: 10%;font-size:16px;width:80%;}
+    .Market_video{width: 95%;display: block;text-align: center;margin: auto;}
+    .Market_video video{margin-bottom: 20px;}
+    .Market_video p{font-size: 18px;}
+    .Market_video h4{font-size: 14px;}
+  	.Market_video span.Market_video_list{width: 120px;margin:30px auto 10px;}
+    .carousel{width: 95%;margin:20px auto 0;text-align: center;}
+    .carousel h4{font-size: 16px;}
+    .carousel span.carousel_list{width: 120px;margin:0 auto 25px;}
+    .Market_cpu_title{width:95%;margin:0 auto 30px;overflow:auto;}
+    .Market_cpu_title .Market_cpu_overflow{width:1000px;}
+    .Market_cpu_title .Market_btn{width: 240px;margin-bottom:8px;}
+    .Dodge_list{width: 95%;margin:0 auto 20px;}
+    .Dodge_list h4{font-size: 14px;}
+  	.Dodge_list span.Fresh_list{width: 120px;margin:0 auto 25px;}
+    .Dodge_list .Dodge_flex{display:block;}
+    .Dodge_list .Dodge_flex div{display:block;width:100%;margin-bottom:10px;}
+    .Dodge_list .Dodge_flex div img{width:100%;}
+    .Dodge_list .Dodge_flex div p{font-size:16px;}
+    .Dodge_list .Dodge_list_p{font-size:18px;padding-top:14px;}
+    .Market_footer{width: 95%;}
+  	.Market_footer h2{font-size: 20px;margin-bottom:0px;}
+  	.Market_footer h4{font-size: 14px;}
+  	.Market_footer span.Market_footer_list{width: 120px;margin:0 auto 25px;}
+    .fixed_footer{width:100%;left:0;}
+    .fixed_footer img{width:100%;}
+  }
+</style>
+{% assign product_handle = "super-easy-curly-wig-with-bangs-curly-fringe-wig" %}
+<div class="Marketing_list">
+  <div class="banner">
+    <a href="https://shop.luvmehair.com/collections/luvme-summer-series?discount=PRO_2207summerevent">
+       <img class="pc_img" src="https://cdn.shopifycdn.net/s/files/1/2465/8681/files/summerevent_2207_eventbanner0729.jpg?v=1659405549" />
+       <img class="yd_img" src="https://cdn.shopifycdn.net/s/files/1/2465/8681/files/summerevent_2207_eventbanner0729-m.jpg?v=1659405549" />
+    </a>
+  </div>
+  <div class="Market_top">
+    <p>As the heat goes up, wearing a wig becomes a handful.</p>
+    <h4>It's Crucial to Choose The Right Wig!</h4>
+    <div class="Market_top_list">
+    	<img class="pc_img" src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_point0715.jpg?v=1657849337" />
+    	<img class="yd_img" src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_point0715-m.jpg?v=1657849917" />
+    </div>
+  </div>
+  <div class="Series">
+  	 <h4 class="Series_h4_pc">NOW WE LAUNCH 2022 SUMMER SERIES</h4>
+     <h4 class="Series_h4_yd">NOW WE LAUNCH <br>2022 SUMMER SERIES</h4>
+<!--      <span class="Series_list"></span> -->
+     <div class="Series_img">
+    	<img class="pc_img" src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_sol0715.jpg?v=1657849337" />
+        <img class="yd_img" src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_sol0715-m.jpg?v=1657849917" />
+     </div>
+  </div>
+  <div class="Dodge_list">
+    <h4>Fast Install & Take-off</h4>
+    <span class="Fresh_list"></span>
+    <div class="pc_img">
+      <div class="Dodge_flex">
+        <div>
+          <img src="https://cdn.shopify.com/s/files/1/2465/8681/files/1f448d7cd5ec65ff2c41ced983b83265.gif?v=1657275617" />
+          <p>PUT ON & GO</p>
+        </div>
+        <div>
+          <img src="https://cdn.shopify.com/s/files/1/2465/8681/files/c528cee1a31da0f38f81d47f399a46f4.gif?v=1657275633" />
+          <p>TAKE OFF EASILY</p>
+        </div>
+      </div>
+    </div>
+    <div class="yd_img">
+    	<img src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_puton-takeoff.gif?v=1657789181" />
+    </div>
+    <a href="https://shop.luvmehair.com/products/5x5-issa-short-water-wave-glueless-lace-wig?discount=PRO_2207summerevent">
+       <img class="pc_img" src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_work06-15.jpg?v=1657849337" />
+       <img class="yd_img" src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_work06-15-m.jpg?v=1657849917" />
+    </a>
+  </div>
+<!--   <div class="Series">
+  	 <h4>Fast Install & Take-off</h4>
+     <span class="Series_list"></span>
+     <div class="Series_img">
+        <img src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_puton-takeoff.gif?v=1657789181" />
+     </div>
+     <div class="Series_img">
+    	<a href="">
+           <img class="pc_img" src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_work06.jpg?v=1657784188" />
+           <img class="yd_img" src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_work06-mobile.jpg?v=1657786307" />
+        </a>
+     </div>
+  </div> -->
+  <div class="Series">
+  	 <h4>Glueless is Easiness!</h4>
+     <span class="Series_list"></span>
+     <div class="Series_img">
+    	<img class="pc_img" src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_gluless0715.jpg?v=1657849337" />
+        <img class="yd_img" src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_gluless-m.jpg?v=1657849918" />
+     </div>
+     <div class="Series_img">
+       	<img class="pc_img" src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_gluelesswigs15.jpg?v=1657849337" />
+        <img class="yd_img" src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_gluelesswigs15-m.jpg?v=1657849917" />
+     </div>
+  </div>
+  
+<!--   <div class="carousel">
+    <h4>Glueless is Easiness!</h4>
+    <span class="carousel_list"></span>
+    <div class="carousel_list_swiper">
+      <div class="carousel_swiper">
+        <div class="swiper mySwiper">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/2465/8681/files/HEAT_LESSENING.jpg?v=1657251381" /></div>
+            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/2465/8681/files/REDUCE_GLUING_DISCOMFORT.jpg?v=1657251393" /></div>
+            <div class="swiper-slide"><img src="https://cdn.shopify.com/s/files/1/2465/8681/files/133a0ce797045f5e802e8caeef217360.jpg?v=1657262340" /></div>
+          </div>
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+  <div class="Market_cpu_title">
+    <div class="Market_cpu_overflow">
+    	{% for i in (1..4) %}
+          {% capture current %}{% cycle 'blunt-cut-4x4-undetectable-lace-closure-bob-wig-real-hd-lace', '4x4-glueless-lace-closure-short-water-wave-wig', 'kinky-curly-neck-length-5x5-undetectable-lace-wig-natural-hairline', 'affordable-quick-weave-bouncy-curly-wig-cute-short-bangs' %}{% endcapture %}
+          <div class="Market_btn">
+            <a href="https://shop.luvmehair.com/products/{{current}}">
+              <img src="//cdn.shopify.com/s/files/1/2465/8681/{{all_products[current].featured_media.preview_image}}" />
+            </a>
+            <h3 class="product__title">
+              {{all_products[current].title}}
+            </h3>
+            <p class="product__price">
+              <span class="product__price-price">
+                <span class="money">{{all_products[current].price | money}}</span>
+              </span>
+              <span class="product__price-cross">
+                <span class="money">
+                  {{all_products[current].compare_at_price | money}}
+                </span>
+              </span>
+            </p>
+          </div>
+        {% endfor %}
+    </div>
+  </div>
+  
+  <div class="Series">
+  	 <h4>Be Fresh & Dodge the Heat</h4>
+     <span class="Series_list"></span>
+     <div class="Series_img">
+    	<img class="pc_img" src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_perfectlength_curlysummer15.jpg?v=1657849337" />
+        <img class="yd_img" src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_perfectlength_curlysummer15-m.jpg?v=1657849918" />
+     </div>
+     <div class="Series_img">
+    	<img class="pc_img" src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_ariywigs15.jpg?v=1657849336" />
+        <img class="yd_img" src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_ariywigs15-m.jpg?v=1657849917" />
+     </div>
+  </div>
+
+  <div class="Market_cpu_title">
+    <div class="Market_cpu_overflow">
+      {% for i in (1..4) %}
+        {% capture currents %}{% cycle '5x5-issa-short-water-wave-glueless-lace-wig', 'bob-wig-human-hair-closure-wig-silky-blunt-cut', 'natural-short-curly-fringe-wig-hot-curly-bangs', '5x5-undetectable-invisible-lace-bob-wig-real-hd-lace' %}{% endcapture %}
+        <div class="Market_btn">
+          <a href="https://shop.luvmehair.com/products/{{currents}}">
+            <img src="//cdn.shopify.com/s/files/1/2465/8681/{{all_products[currents].featured_media.preview_image}}" />
+          </a>
+          <h3 class="product__title">
+            {{all_products[currents].title}}
+          </h3>
+          <p class="product__price">
+            <span class="product__price-price">
+              <span class="money">{{all_products[currents].price | money}}</span>
+            </span>
+            <span class="product__price-cross">
+              <span class="money">
+                {{all_products[currents].compare_at_price | money}}
+              </span>
+            </span>
+          </p>
+        </div>
+      {% endfor %}
+     </div>
+  </div>
+  
+  <div class="Enjoy_top">
+  	 <h4>Enjoy this Summer</h4>
+     <span class="Enjoy_list"></span>
+     <p class="Enjoy_p">Wet & Fluffy Looks for Exciting Summer Vibes</p>
+  </div>
+  <div class="Enjoy">
+     <div class="Enjoy_overflow">
+    	<div class="Enjoy_btn">
+           <a href="https://shop.luvmehair.com/products/4x4-glueless-lace-closure-short-water-wave-wig">
+             <img src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_inf_44NFM_1.jpg?v=1657785742" />
+             <span>SHOP THE LOOK</span>
+           </a>
+        </div>
+        <div class="Enjoy_btn">
+           <a href="https://shop.luvmehair.com/products/4x4-natural-big-kinky-curly-closure-lace-wig-1">
+             <img src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_inf_BKC.jpg?v=1657794603" />
+             <span>SHOP THE LOOK</span>
+           </a>
+        </div>
+        <div class="Enjoy_btn">
+           <a href="https://shop.luvmehair.com/products/bob-wig-human-hair-closure-wig-silky-blunt-cut">
+             <img src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_inf_bob.jpg?v=1657785742" />
+             <span>SHOP THE LOOK</span>
+           </a>
+        </div>
+        <div class="Enjoy_btn">
+           <a href="https://shop.luvmehair.com/products/super-easy-curly-wig-with-bangs-curly-fringe-wig">
+             <img src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_inf_T5HHLD.jpg?v=1657785742" />
+             <span>SHOP THE LOOK</span>
+           </a>
+        </div>
+     </div>
+  </div>
+  
+  <div class="Market_video">
+<!--     <h4>It's crucial to choose a right wig!</h4> -->
+    <span class="Market_video_list"></span>
+    <video width="100%" poster="https://cdn.shopify.com/s/files/1/2465/8681/files/lALPGP5wKY42AcLNAtDNBQA_1280_720.png?v=1657188018" muted autoplay="autoplay" 
+           webkit-playsinline="true" playsinline="true" preload="none" controls="controls">
+      <source src="https://cdn.shopify.com/videos/c/o/v/d2b09d5c58514453be2d7bca29a4ff67.mp4" />
+    </video>
+  </div>
+  
+<!--   <div class="Dodge_list">
+    <h4>Be Fresh & Dodge the Heat</h4>
+    <span class="Fresh_list"></span>
+    <div class="Dodge_flex">
+      <div><img src="https://cdn.shopify.com/s/files/1/2465/8681/files/prerfect.jpg?v=1657251455" /></div>
+          <div><img src="https://cdn.shopify.com/s/files/1/2465/8681/files/CURLY.jpg?v=1657251467" /></div>
+    </div>
+    <div class="Dodge_list_p pc_img">Verified by 1,000+ consumers that curly hair is more breathable.</div>
+    <div class="Dodge_list_p yd_img">Verified by 1,000+ consumers<br> that curly hair is more breathable.</div>
+  </div> -->
+  <div class="Market_footer">
+<!--     <h2>[ Enjoy Your Best Summer ]</h2>
+    <h4 class="pc_img">Wet & Fluffy Looks for Exciting Summer Vibes</h4>
+    <h4 class="yd_img">Wet & Fluffy Looks<br> for Exciting Summer Vibes</h4>
+    <span class="Market_footer_list"></span> -->
+    <a href="https://shop.luvmehair.com/collections/luvme-summer-series">
+       <img class="pc_img" src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_bottomhint0715.jpg?v=1657849336" />
+       <img class="yd_img" src="https://cdn.shopify.com/s/files/1/2465/8681/files/7db76b9634671de4a5d7a9ba6dde290d.png?v=1657252157" />
+    </a>
+  </div>
+  
+  <div class="fixed_footer">
+  	<a href="https://shop.luvmehair.com/collections/luvme-summer-series?discount=PRO_2207summerevent">
+       <img class="pc_img" src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_prohint0715.png?v=1657849337" />
+       <img class="yd_img" src="https://cdn.shopify.com/s/files/1/2465/8681/files/summerevent_2207_prohint0715-m.jpg?v=1657849917" />
+    </a>
+  </div>
+</div>
+<script>
+    $(document).ready(function(){
+	  let height = $('.fixed_footer a img').height() + 'px'
+      let top = Number($('.fixed_footer a img').height()) + Number(20) + 'px'
+      console.log(top)
+      $('.footer').css('margin-bottom',height)
+      $('.back-to-top').css('bottom',top)
+	});
+</script>
+<!-- <script>
+  let num = ''
+  if($(window).width()>750){
+    num = 2
+  }else{
+    num = 1
+  }
+  var swiper = new Swiper(".mySwiper", {
+    slidesPerView: num,
+    spaceBetween: 20,
+    slidesPerGroup: 1,
+    loop: true,
+    loopFillGroupWithBlank: true,
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+  });
+</script> -->

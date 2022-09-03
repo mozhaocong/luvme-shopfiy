@@ -1,0 +1,104 @@
+{% comment %}
+  Parameters:
+  - title {string} [required] - The item title or summary
+  - content {string} [required] - The item content
+  - add_content_class {string} [optional] - Additional class(es) to add to the content element
+  - toggle_icon {string} [optional] - Custom icon markup, e.g. '<span class="icon">...</span>'
+  - item_open {boolean} [optional] - Whether the item should be open on page load. Default is false.
+{% endcomment %}
+
+{%- liquid
+  assign item_attr = 'class="cc-accordion-item"'
+
+  if item_open == true
+    assign item_attr = 'class="cc-accordion-item is-open" open'
+  endif
+
+  if add_content_class
+    assign content_class = add_content_class | prepend: ' '
+  endif
+
+  if show_more
+    assign more-accordion-item = 'more-accordion-item'
+  endif
+-%}
+
+<details {{ item_attr }}>
+  <summary class="cc-accordion-item__title">{{- title -}}{{- toggle_icon -}}</summary>
+  <div class="cc-accordion-item__panel">
+    <div class="cc-accordion-item__content{{ content_class }} {{ more-accordion-item }} ">
+      <div class="content_data">
+        {{- content -}}
+      </div>
+    </div>
+  </div>
+</details>
+<style>
+  .cc-accordion-item__content p {
+    margin: 0;
+    line-height: 25px;
+  }
+  .more-show-none{
+    height: 75px;
+    overflow: hidden;
+  }
+  .accordion-more-button{
+    margin: 1rem 0 0;
+    cursor: pointer;
+    border-bottom: 1px solid #cccccc;
+    width: 110px;
+  }
+  .cc-accordion-item__content{
+    margin-bottom: 20px;
+    padding-bottom:0
+  }
+</style>
+<script>
+  var show_more = false
+   try{
+     show_more = {{ show_more | json }} 
+   } catch(error){
+     console.log(error)
+   } 
+  if(show_more) {
+    // var current = 1
+    // if(window.accordionItemShowMore) {
+    //   window.accordionItemShowMore++
+    // } else {
+    //    window.accordionItemShowMore = 1
+    // }
+    var current =  document.querySelectorAll('.more-accordion-item').length
+    var curenDom = document.querySelectorAll('.more-accordion-item')[current - 1]
+    var children = curenDom.querySelector('.content_data')
+    const curenDomHeight =  document.defaultView.getComputedStyle(children)?.height?.replace('px', '') || 0
+    console.log('curenDomHeight', curenDomHeight * 1)
+    if(curenDomHeight * 1 > 75) {
+      var dom=document.createElement('div');
+      var className = 'read-more-' + current + ' accordion-more-button' 
+      dom.className=className ;
+      dom.innerHTML='+ Read More';
+
+      function setDomClick(domA,childrenA) {
+        dom.onclick=function () {
+          if(domA.innerText === '+ Read More') {
+            domA.innerText = '- Close More'
+            childrenA.classList.remove('more-show-none')
+          } else{
+            domA.innerText = '+ Read More'
+            initDom(childrenA)
+          }
+        }
+      }
+      function initDom(childrenDom) {
+          childrenDom.classList.add('more-show-none')
+      } 
+      setDomClick(dom, children) 
+      console.log('curenDom', curenDom)
+      curenDom.appendChild(dom)
+      initDom(children)
+    }
+  }
+
+</script>
+
+

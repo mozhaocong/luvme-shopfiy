@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+{%- liquid
+  assign rtl_langs = 'ar,arc,dv,fa,ha,he,khw,ks,ku,ps,ur,yi' | split: ','
+  if rtl_langs contains localization.language.iso_code
+    assign lang_dir = 'rtl'
+  else
+    assign lang_dir = 'ltr'
+  endif
+-%}
+<html lang="{{ request.locale.iso_code }}" dir="{{ lang_dir }}">
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<!--   <script async src="https://www.googletagmanager.com/gtag/js?id=G-DYWJH945VT"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+  
+    gtag('config', 'G-DYWJH945VT',{ 'debug_mode':true });
+  </script> -->
+  
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GTM-TQQ4VCG');</script>
+  <!-- End Google Tag Manager -->
+  
+  <!-- Symmetry 5.5.1 -->
+  <link rel="preload" href="{{ 'mozhaocong.css' | asset_url }}" as="style">
+  <link rel="preload" href="{{ 'vendor.min.css' | asset_url }}" as="style">
+  <link rel="preload" href="{{ 'theme-styles.css' | asset_url }}" as="style">
+  <link rel="preload" href="{{ 'theme-styles-responsive.css' | asset_url }}" as="style">
+  <link rel="preload" href="{{ 'styles.css' | asset_url }}" as="style">
+  <link rel="preload" href="{{ 'chenjiangyang.css' | asset_url }}" as="style">
+  <link rel="preload" href="{{ 'jquery.min.js' | asset_url }}" as="script">
+  <link rel="preload" href="{{ 'jquery-cookie.min.js' | asset_url }}" as="script">
+  <link rel="preload" href="{{ 'countdown.js' | asset_url }}" as="script">
+  <link rel="preload" href="{{ 'halo.js' | asset_url }}" as="script">
+  <script type="text/javascript" src="https://cdn.shopify.com/s/files/1/2465/8681/files/jquery.min.js?v=1613585053"></script>
+  <script type="text/javascript" src="https://cdn.shopify.com/s/files/1/2465/8681/files/jquery.cookie.js?v=1646126906"></script>
+  {{ 'md5.js'  | asset_url | script_tag }}
+  <script>
+var pageGroup = ''
+if(window.location.href.substr(0, 34) == 'https://shop.luvmehair.com/account'){
+  pageGroup = 'Account Page'
+}else if(window.location.href.substr(0, 32) == 'https://shop.luvmehair.com/blogs'){
+  pageGroup = 'Blog Page'
+}else if(window.location.href.substr(0, 31) == 'https://shop.luvmehair.com/cart'){
+  pageGroup = 'Cart Page'
+}else if(window.location.href.substr(0, 45) == 'https://shop.luvmehair.com/24658681/checkouts'){
+  pageGroup = 'Checkout Page'
+}else if(window.location.href == 'https://shop.luvmehair.com/'|| window.location.href.substr(0, 28) == 'https://shop.luvmehair.com/?'){
+  pageGroup = 'Home Page'
+}else if(window.location.href.substr(0, 33) == 'https://shop.luvmehair.com/search'){
+  pageGroup = 'Search Page'
+}else if(window.location.href.indexOf("products")>0){
+  pageGroup = 'Product Detail Page'
+}else if(window.location.href.substr(0, 38) == 'https://shop.luvmehair.com/collections'){
+  pageGroup = 'Product List Page'
+}else if(window.location.href.substr(0, 32) == 'https://shop.luvmehair.com/pages'){
+  pageGroup = 'Costorm Pages'
+}else if(window.location.href == 'https://support.luvmehair.com/'){
+  pageGroup = 'Track Oders Page'
+}else if(window.location.href.substr(0, 43) == 'https://shop.luvmehair.com/24658681/orders/'){
+  pageGroup = 'Thanks Page'
+}else if(window.location.href.substr(0, 37) == 'https://shop.luvmehair.com/gift_cards'){
+  pageGroup = 'Gift Cards Page'
+}else{
+  pageGroup = 'Other Pages'
+}
+// 客户与游客的区别
+let logins = '';
+logins = {{ customer.id | json }};
+localStorage.setItem("tock_log", logins);
+let aseKey = "ABCD1234"//秘钥必须为：8/16/32位
+const {origin, pathname, search} = window.location
+const page_link = origin + pathname
+const searchData = new URLSearchParams(search)
+const page_num = searchData.get('page')
+var userEmail = {{ customer.email | json }};
+var user_detail = ''     
+if(userEmail) {
+  user_detail = MD5(user_detail)
+}       
+if(logins !== null){
+  //加密 DES/AES切换只需要修改 CryptoJS.AES <=> CryptoJS.DES
+  let login = CryptoJS.AES.encrypt(logins.toString(), CryptoJS.enc.Utf8.parse(aseKey), {
+    mode: CryptoJS.mode.ECB,
+    padding: CryptoJS.pad.Pkcs7
+  }).toString();
+  dataLayer.push({
+    'UserID': login,
+    'UserType': 'Member',
+    'page_group': pageGroup,
+    page_num,
+    page_link,
+    user_detail
+  })
+}else{
+  dataLayer.push({
+    'UserID': '',
+    'UserType': 'Guest',
+    'page_group': pageGroup,
+    page_link,
+    page_num,
+    user_detail
+  })
+}
+  </script>
+  
+  
+  {% render 'head-tag' %}
+
+  <title>
+    {{ page_title }}{% if current_tags %}{% assign meta_tags = current_tags | join: ', ' %} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags }}{% endif %}{% if current_page != 1 %} &ndash; {{ 'general.meta.page' | t: page: current_page }}{% endif %}{% unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless %}
+  </title>
+
+  {% render 'social-meta-tags' %}
+  {{ 'vendor.min.css' | asset_url | stylesheet_tag }}
+  {{ 'mozhaocong.css' | asset_url | stylesheet_tag }}
+  {{ 'theme-styles.css' | asset_url | stylesheet_tag }}
+  {{ 'theme-styles-responsive.css' | asset_url | stylesheet_tag }}
+  
+  {{ 'styles.css' | asset_url | stylesheet_tag }}
+  {{ 'chenjiangyang.css' | asset_url | stylesheet_tag }}
+  
+  
+  <script>
+    window.theme = window.theme || {};
+    theme.money_format_with_product_code_preference = {% if settings.product_currency_code_enabled %}{{ shop.money_with_currency_format | json }}{% else %}{{ shop.money_format | json }}{% endif %};
+    theme.money_format_with_cart_code_preference = {% if settings.cart_currency_code_enabled %}{{ shop.money_with_currency_format | json }}{% else %}{{ shop.money_format | json }}{% endif %};
+    theme.money_format = {{ shop.money_format | json }};
+    theme.strings = {
+      previous: {{ 'general.accessibility_labels.previous' | t | json }},
+      next: {{ 'general.accessibility_labels.next' | t | json }},
+      addressError: {{ 'map.errors.address_error' | t | json }},
+      addressNoResults: {{ 'map.errors.address_no_results' | t | json }},
+      addressQueryLimit: {{ 'map.errors.address_query_limit_html' | t | json }},
+      authError: {{ 'map.errors.auth_error' | t | json }},
+      icon_labels_left: {{ 'general.icon_labels.left' | t | escape | json }},
+      icon_labels_right: {{ 'general.icon_labels.right' | t | escape | json }},
+      icon_labels_down: {{ 'general.icon_labels.down' | t | escape | json }},
+      icon_labels_close: {{ 'general.icon_labels.close' | t | escape | json }},
+      icon_labels_plus: {{ 'general.icon_labels.plus' | t | escape | json }},
+      cart_terms_confirmation: {{ 'cart.terms.confirmation' | t | json }},
+      products_listing_from: {{ 'products.listing.from' | t | json }},
+      layout_live_search_see_all: {{ 'layout.live_search.see_all' | t | json }},
+      products_product_add_to_cart: {{ 'products.product.add_to_cart' | t | json }},
+      products_variant_no_stock: {{ 'products.variant.no_stock' | t | json }},
+      products_variant_non_existent: {{ 'products.variant.non_existent' | t | json }},
+      products_product_pick_a: {{ 'products.product.pick_a' | t | json }},
+      general_navigation_menu_toggle_aria_label: {{ 'general.navigation.menu_toggle_aria_label' | t | json }},
+      general_accessibility_labels_close: {{ 'general.accessibility_labels.close' | t | json }},
+      products_product_adding_to_cart: {{ 'products.product.adding_to_cart' | t | json }},
+      products_product_added_to_cart: {{ 'products.product.added_to_cart' | t | json }},
+      general_quick_search_pages: {{ 'general.quick_search.pages' | t | json }},
+      general_quick_search_no_results: {{ 'general.quick_search.no_results' | t | json }},
+      collections_general_see_all_subcollections: {{ 'collections.general.see_all_subcollections' | t | json }}
+    };
+    theme.routes = {
+      cart_url: '{{ routes.cart_url }}',
+      cart_add_url: '{{ routes.cart_add_url }}.js',
+      cart_change_url: '{{ routes.cart_change_url }}',
+      predictive_search_url: '{{ routes.predictive_search_url }}'
+    };
+    theme.settings = {
+      cart_type: {{ settings.cart_type | json }},
+      quickbuy_style: {{ settings.quickbuy_style | json }},
+      avoid_orphans: {{ settings.avoid_orphans | json }}
+    };
+    document.documentElement.classList.add('js');
+  </script>
+
+  {%- if settings.swatch_enabled and settings.swatch_value_list != blank -%}
+    <style>
+      {%- assign swatch_lines = settings.swatch_value_list | newline_to_br | strip_newlines | split: '<br />' -%}
+      {%- for line in swatch_lines -%}
+        {%- assign line_split = line | split: ':' -%}
+        {%- if line_split.last contains '#' -%}
+          [data-swatch="{{ line_split.first | replace: '"', '' | downcase }}"] { --swatch-background-color: {{- line_split.last -}} }
+        {%- else -%}
+          [data-swatch="{{ line_split.first | replace: '"', '' | downcase }}"] { --swatch-background-image: url({{- line_split.last | strip | file_img_url: '128x128', crop: settings.swatch_crop_align -}}) }
+        {%- endif -%}
+      {%- endfor -%}
+    </style>
+  {%- endif -%}
+
+  {{ content_for_header }}
+{% render 'judgeme_core' %}
+
+{% render 'gsf-conversion-pixels' %}
+</head>
+
+{% include 'swymSnippet' %}
+{% include 'swym-custom.js' %}          
+<body class="template-{{ template | split: '.' | first | handle }}    
+    {%- if template.suffix %} template-suffix-{{ template.suffix }}{% endif -%}
+    {%- if settings.swatch_enabled %} swatch-method-{{ settings.swatch_method }} swatch-style-{{ settings.swatch_style }}{% endif -%}
+    " data-cc-animate-timeout="0">
+<script>window.KlarnaThemeGlobals={};{%case template.name%} {%when"product"%} {% if product.first_available_variant.price %}window.KlarnaThemeGlobals.data_purchase_amount = {{ product.first_available_variant.price }};{% endif %}window.KlarnaThemeGlobals.productVariants={{product.variants|json}};window.KlarnaThemeGlobals.documentCopy=document.cloneNode(true);{%when"cart"%} window.KlarnaThemeGlobals.data_purchase_amount={{cart.total_price}};window.KlarnaThemeGlobals.documentCopy=document.cloneNode(true);{%endcase%}</script>
+
+
+
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TQQ4VCG"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+  
+  {%- if settings.animations_enabled_desktop -%}
+    <script>
+      if ('IntersectionObserver' in window) {
+        document.body.classList.add("cc-animate-enabled");
+      }
+    </script>
+  {%- endif -%}
+
+  <a class="skip-link visually-hidden" href="#content">{{ 'general.accessibility_labels.skip_to_content' | t }}</a>
+  {% section 'announcement-bar' %}
+  {% section 'header' %}
+  {% section 'store-messages' %}
+
+  <main id="content" role="main">
+    <div class="container cf">
+
+      {{ content_for_layout }}
+
+    </div><!-- /.container -->
+  </main><!-- /#content -->
+
+  {% if request.path != '/challenge' %}
+    <div id="pagefooter">
+      {% section 'cross-page-promos' %}
+      {% section 'footer' %}
+    </div>
+    {% section 'popup' %}
+  {% endif %}
+  {{ 'jquery.min.js'  | asset_url | script_tag }}
+  {{ 'jquery-cookie.min.js'  | asset_url | script_tag }}
+<!--   {{ 'countdown.js'  | asset_url | script_tag }} -->
+  {{ 'halo.js'  | asset_url | script_tag }}
+  {{ 'vendor.min.js'  | asset_url | script_tag }}
+  {{ 'theme.js'  | asset_url | script_tag }}
+  {{ 'google-buried.js'  | asset_url | script_tag }}
+  {{ 'huang.js'  | asset_url | script_tag }}
+  {{ 'mozhaocong.js'  | asset_url | script_tag }}
+  {{ 'chenjiangyang.js'  | asset_url | script_tag }}
+  
+ {% include 'smile-initializer' %}
+{% render 'back-to-the-top' %}
+  
+{% include 'subscribe-it-helper' %}
+    
+
+</html>
+<style>
+  .jdgm-rev__pics, .jdgm-rev__pic-link {
+    height: auto !important;
+}
+  .jdgm-rev_thumb-down, .jdgm-rev_thump-down-count {
+    display:none !important;}
+  
+  .jdgm-paginate__load-more {
+  color: white !important
+  }
+ .jdgm-sort-dropdown-arrow{
+  margin-top:-30px!important;
+  }
+  </style>
+
+<!-- Begin Shopify-Afterpay JavaScript Snippet (v1.1.1) -->
+{% if cart.currency.iso_code == shop.currency %}
+<script type="text/javascript">
+// Overrides:
+// var afterpay_min = 0.04;       // As per your Afterpay contract.
+// var afterpay_max = 2000.00;    // As per your Afterpay contract.
+// var afterpay_msg_size = 'md';  // Can be 'xs', 'sm', 'md' or 'lg'.
+// var afterpay_logo_theme = 'colour';  // Can be 'colour', 'black' or 'white'.
+// var afterpay_modal_open_icon = true;
+// var afterpay_hide_upper_limit = false;
+// var afterpay_hide_lower_limit = true;
+// var afterpay_show_if_outside_limits = true;
+// var afterpay_cbt_enabled = false;
+
+// var afterpay_product_integration_enabled = true;
+// var afterpay_product_selector = '#product-price-selector';
+// var afterpay_variable_price_fallback = false;
+// var afterpay_variable_price_fallback_selector = '';
+// var afterpay_variable_price_fallback_method = 'mutation';  // Can be 'mutation' or 'interval'.
+
+// var afterpay_cart_integration_enabled = true;
+// var afterpay_cart_static_selector = '#cart-subtotal-selector';
+// var afterpay_variable_subtotal_fallback = false;
+// var afterpay_variable_subtotal_fallback_selector = '';
+// var afterpay_variable_subtotal_fallback_method = 'mutation'; // Can be 'mutation' or 'interval'.
+// var afterpay_cart_dynamic_integration_enabled = false;
+
+// var afterpay_footer_logo_enabled = true;
+// var afterpay_footer_logo_format = 'icon';  // Can be 'icon', 'stacked' or 'logo'.
+// var afterpay_footer_logo_theme = 'colour'; // Can be 'colour', 'black' or 'white'.
+// var afterpay_footer_logo_background = 'border';  // Can be 'border' or 'transparent'.
+// var afterpay_footer_logo_container = 'footer ul.payment-icons';
+// var afterpay_footer_logo_template = '<li class="payment-icon"><object data="{logo_path}" type="image/svg+xml"></object></li>';
+
+// Non-editable fields:
+var afterpay_js_language = {{ localization.language.iso_code | json }};
+var afterpay_js_country = {{ localization.country.iso_code | json }};
+var afterpay_shop_currency = {{ shop.currency | json }};
+var afterpay_cart_currency = {{ cart.currency.iso_code | json }};
+var afterpay_shop_money_format = {{ shop.money_format | json }};
+var afterpay_shop_permanent_domain = {{ shop.permanent_domain | json }};
+var afterpay_theme_name = {{ theme.name | json }};
+var afterpay_product = {{ product | json }};
+var afterpay_current_variant = {{ product.selected_or_first_available_variant | json }};
+var afterpay_cart_total_price = {{ cart.total_price | json }};
+var afterpay_js_snippet_version = '1.1.1';
+</script>
+<script type="text/javascript" src="https://static.afterpay.com/shopify-afterpay-javascript.js"></script>
+{% else %}
+<!-- Afterpay disabled: {{ cart.currency.iso_code }} != {{ shop.currency }} -->
+{% endif %}
+<!-- End Shopify-Afterpay JavaScript Snippet (v1.1.1) -->
+<style>
+
+
+div#judgeme_product_reviews {
+display: block !important;
+}
+  {% if template contains 'product' %}
+ #underlined-badge span.jdgm-prev-badge__text {
+  text-decoration: underline !important;
+}
+  {% endif %}
+  </style>

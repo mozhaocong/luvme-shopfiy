@@ -1,0 +1,188 @@
+<div class="suppermarket-featured-products featured-products" id="featured-products-{{section.id}}" data-featured-products-section-2 {% if section.settings.show_slider_featured_collection != blank %}data-loader-product data-collection="{{section.settings.show_slider_featured_collection}}" data-limit="{{ section.settings.slider_featured_limit_all }}" data-grid="{{ section.settings.collection_results_per_row1 }}" data-layout="carousel" sectionId="{{section.id}}"{% endif %}>
+    <div class="container">
+        <div class="row">             
+            {% if section.settings.featured_products_title != blank %}
+            <div class="widget-title not-before style-3{% if section.settings.title_style == 'style_3' %} widget-title-3{% elsif section.settings.title_style == 'style_2' %} idget-title-2{% else %} widget-title-1{% endif %}">   
+                <h3 class="box-title">
+                    <span class="title"> 
+                        {% render 'multilang' with section.settings.featured_products_title %}
+                    </span>
+                </h3>
+
+                {% if section.settings.countdown != blank %}
+                <div class="countdown countdown-style-market">
+                    {% render 'multilang' with section.settings.text_countdown %}
+                    <div id="remainSeconds" style="display:none">{{ section.settings.countdown }}</div>
+                    <div id="remainTime" class="countdown-item countdown-suppermarket" value="{{ section.settings.countdown }}"></div>
+<!--                     {{ section.settings.countdown }} -->
+<!--                     <div class="countdown-item countdown-suppermarket" data-countdown-normal data-countdown-value="{{ section.settings.countdown }}"></div> -->
+                </div>        
+                {% endif %}
+
+                {% if section.settings.view_all != blank %}
+                <a class="view_all" href="{{ section.settings.link_view_all }}" title="{{ section.settings.view_all }}">
+                    {% render 'multilang' with section.settings.view_all %}
+                </a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    function getNowTime(){
+      const yy = new Date().getFullYear()
+      const MM = (new Date().getMonth() + 1) < 10 ? '0' + (new Date().getMonth() + 1) : (new Date().getMonth() + 1)
+      const dd = new Date().getDate() < 10 ? '0' + new Date().getDate() : new Date().getDate()
+      const HH = new Date().getHours() < 10 ? '0' + new Date().getHours() : new Date().getHours()
+      const mm = new Date().getMinutes() < 10 ? '0' + new Date().getMinutes() : new Date().getMinutes()
+      const ss = new Date().getSeconds() < 10 ? '0' + new Date().getSeconds() : new Date().getSeconds()
+      const str = yy + '-' + MM + '-' + dd + ' ' + HH + ':' + mm + ':' + ss
+      return str;
+    }
+    var SysSecond;
+    var InterValObj;
+    var newsDate = new Date(getNowTime());//当前时间转为毫秒
+    var news=newsDate.getTime();
+    var fillDate = new Date($("#featured-products-{{section.id}} #remainSeconds").html());//后台填写时间转为毫秒
+    var fill=fillDate.getTime();
+    var times = fill - news //两个时间的对比
+    $(document).ready(function() {
+      SysSecond = parseInt(times/1000); //这里获取倒计时的起始时间
+      InterValObj = window.setInterval(SetRemainTime, 1000); //间隔函数，1秒执行
+    });
+
+    //将时间减去1秒，计算天、时、分、秒
+    function SetRemainTime() {
+        if (SysSecond > 0) {
+            SysSecond = SysSecond - 1;
+            var second = Math.floor(SysSecond % 60)<10?'0'+Math.floor(SysSecond % 60):Math.floor(SysSecond % 60);    // 计算秒     
+            var minite = Math.floor((SysSecond / 60) % 60)<10?'0'+ Math.floor((SysSecond / 60) % 60): Math.floor((SysSecond / 60) % 60);   //计算分 
+            var hour = Math.floor((SysSecond / 3600) % 24)<10?'0'+ Math.floor((SysSecond / 3600) % 24): Math.floor((SysSecond / 3600) % 24);      //计算小时
+            var day = Math.floor((SysSecond / 3600) / 24);       //计算天 
+            var dayDiv = "<span id='daySpan'>"+ day + "d" +"</span>";
+            var hourDiv = "<span id='hourSpan'>"+ hour + ":"+"</span>";
+            var miniteDiv = "<span id='miniteSpan'>"+ minite + ":"+"</span>";
+            var secondDiv = "<span id='secondSpan'>"+ second +"</span>";
+            $("#featured-products-{{section.id}} #remainTime").html(dayDiv + hourDiv + miniteDiv + secondDiv); 
+        } else {//剩余时间小于或等于0的时候，就停止间隔函数
+            window.clearInterval(InterValObj);
+            //这里可以添加倒计时时间为0后需要执行的事件
+            $("#featured-products-{{section.id}} #remainTime").html('0d 00:00:00'); 
+        }
+    }
+</script>
+<style>
+    #daySpan{margin-right:3px;}
+    #featured-products-{{section.id}} .widget-title-3{margin: auto;}
+    #featured-products-{{section.id}} .widget-title-3 .countdown-style-market{border: 1px solid;}
+    {% assign margin_bottom =  section.settings.margin_bottom %} 
+
+    #featured-products-{{section.id}} .box-title, #featured-products-{{section.id}} .box-title svg  {
+        color: {{ section.settings.color_text_title }};
+    }
+
+    #featured-products-{{section.id}} .widget-title-1 .countdown-style-market {
+        color: {{ section.settings.color_text_title }};
+        border: 1px solid {{ section.settings.color_text_title }};
+    }
+
+    #featured-products-{{section.id}} .widget-title-1 .box-title .title:after {
+        background: {{ section.settings.color_text_title }};
+    }
+
+    @media (max-width: 767px) {
+        #featured-products-{{section.id}} {
+            margin-bottom: {{ section.settings.margin_bottom_mb }}px;
+        }
+    }
+
+    @media (min-width: 768px) and (max-width: 1199px) {
+        #featured-products-{{section.id}} {
+            margin-bottom: {{ section.settings.margin_bottom_tab }}px;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        #featured-products-{{section.id}} {
+            margin-bottom: {{ margin_bottom }}px;
+        }
+    }	
+</style>
+
+{% schema %}
+    {
+        "name": "Custom Title-time",
+        "class": "suppermarket-featured-products-sections",
+        "settings": [            
+            {
+                "type": "header",
+                "content": "Widget Title"
+            },
+            {
+                "type": "select",
+                "id": "title_style",
+                "label": "Title Style:",
+
+                "options": [
+                  {
+                    "value": "style_1",
+                    "label": "Style 1" 
+                  },
+                  { 
+                    "value": "style_2",
+                    "label": "Style 2" 
+                  },
+                  { 
+                    "value": "style_3",
+                    "label": "Style 3" 
+                  }
+                ],
+                "default": "style_1"
+            },
+            {
+                "type": "text",
+                "id": "featured_products_title",
+                "label": "Title",
+                "default": "Flash Deals",
+                "info": "======================"
+            },
+            {
+                "type" : "color",
+                "id" : "color_text_title",
+                "label" : "Color Title"
+            }, 
+            {
+                "type": "text",
+                "id": "text_countdown",
+                "label": "Text Countdown",
+                "default": "Ends in:"
+            },
+            {
+                "type": "textarea",
+                "id": "countdown",
+                "label": "Countdown",
+                "default" : "2020-01-7 0:0:00",
+                "info": "======================"
+            },
+            {
+                "type" : "text",
+                "id" : "view_all",
+                "label" : "Text view all"
+            },
+            {
+                "type" : "url",
+                "label" : "Link view all",
+                "id" : "link_view_all"
+            }  
+        ],
+        "presets": [
+            {
+                "name": "Custom Title-time",
+                "category": "Supermarket"     
+            }
+        ]
+    }
+{% endschema %}
+
+

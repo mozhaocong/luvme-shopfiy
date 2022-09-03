@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="{{ locale }}" dir="{{ direction }}" class="{{ checkout_html_classes }}">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, minimum-scale=1.0, user-scalable=0">
+    <meta name="referrer" content="origin">
+    <script type="text/javascript" src="https://cdn.shopify.com/s/files/1/2465/8681/files/jquery.min.js?v=1613585053"></script>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-TQQ4VCG');</script>
+    <!-- End Google Tag Manager -->
+    <title>{{ page_title }}</title>
+
+    {{ content_for_header }}
+
+    {{ checkout_stylesheets }}
+    {{ checkout_scripts }}
+  </head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+  <script type="text/javascript" src="https://cdn.shopify.com/s/files/1/2465/8681/files/jquery.cookie.js?v=1646126906"></script>
+  <script>
+      
+  </script>
+  <body>
+    {{ skip_to_content_link }}
+
+    <header class="banner" data-header role="banner">
+      <div class="wrap">
+        {{ content_for_logo }}
+      </div>
+    </header>
+
+    {{ order_summary_toggle }}
+    <div class="content" data-content>
+      <div class="wrap">
+        <div class="main">
+          <header class="main__header" role="banner">
+            {{ content_for_logo }}
+            {{ breadcrumb }}
+            {{ alternative_payment_methods }}
+          </header>
+          <main class="main__content" role="main">
+            {{ content_for_layout }}
+          </main>
+          <footer class="main__footer" role="contentinfo">
+            {{ content_for_footer }}
+          </footer>
+        </div>
+        <aside class="sidebar" role="complementary">
+          <div class="sidebar__header">
+            {{ content_for_logo }}
+          </div>
+          <div class="sidebar__content">
+            {{ content_for_order_summary }}
+          </div>
+        </aside>
+      </div>
+    </div>
+
+    {{ tracking_code }}
+  </body>
+  <script>
+    // 判断是否注册成功
+    $('document').ready(function(){ 
+         var userEmail = localStorage.getItem("createUserEmail")
+         // console.log(localStorage.getItem("userList") == 'userlist' , window.performance.navigation.type == 0, 2222222222)
+         if(localStorage.getItem("userList") == 'userlist' && window.performance.navigation.type==0){ //成功
+           localStorage.removeItem('userList')
+           dataLayer.push({
+              'event': 'uaEvent',
+              'event_type': 'sign_up',
+              'ecommerce':{
+                'user_email':userEmail,
+              }
+           })
+         }
+      })
+  </script>
+  <script>
+      $(document).ready(function(){
+       var submitStr =$('.step__footer>button[type="submit"]>span').text();
+       var shownStr =$('.shown-if-js>button[name="button"]>span').text();
+       var class_name = $('.section.section--payment-method>.section__content').children('div').attr('class')
+       if($('.field__message--error').length>0 && submitStr.indexOf("shipping")>0 && submitStr == 'Continue to shipping'){//失败  73
+         var failStr="";
+         for(var i=0;i<$('.field__message--error').length;i++){
+         	failStr+=$('.field__message--error')[i].innerText.replace(/(^\s*)|(\s*$)/g,"")+",";
+         }
+         window.dataLayer.push({
+          'event': 'uaEvent',
+          "event_type": "contact_information_error",
+          "error_info":failStr
+        })
+       }else if(submitStr.indexOf("payment")>0 &&window.performance.navigation.type==0){//成功跳转到下一步 74
+         //window.performance.navigation.type  0:正常跳转，1：页面刷新，2：从前面一个页面后退	
+         window.dataLayer.push({
+          'event': 'uaEvent',
+          "event_type": "contact_information_confirm",
+        })
+       }else if($('.field__message--error').length>0 && shownStr.indexOf("Payment")<0 ){ //pay now 点击跳转失败
+         var failStr="";
+         for(var i=0;i<$('.field__message--error').length;i++){
+         	failStr+=$('.field__message--error')[i].innerText.replace(/(^\s*)|(\s*$)/g,"")+",";
+         }
+         var value_num = '{{checkout.total_price | money_without_currency }}'.replace(/,/g,'')
+         var product_subtotal = '{{checkout.line_items_subtotal_price | money_without_currency }}'.replace(/,/g,'')
+         window.dataLayer.push({
+            'event': 'uaEvent',
+            "event_type": "pay_now_error",
+            "ecommerce": {
+              "currency": 'USD',
+              "value": Number(value_num),
+              "product_subtotal": Number(product_subtotal),
+              "coupon_discount": {{checkout.discounts_amount | money_without_currency }},
+              "giftcard": {{checkout.gift_cards_amount | money_without_currency }},
+              "shipping": {{checkout.shipping_price | money_without_currency }},
+              "shipping_tier": '{{checkout.shipping_method.title}}',
+              "payment_type": 'Credit card',
+              "transaction_id": '{{checkout.order_number}}',
+              "error_info": failStr,
+            }
+          })
+       }
+       // else if(class_name == 'notice notice--error default-background'){
+       //  刷新页面触发pay now事件
+       // }
+    
+   });
+      var pageGroup = ''
+      if(window.location.href.substr(0, 34) == 'https://shop.luvmehair.com/account'){
+        pageGroup = 'Account Page'
+      }else if(window.location.href.substr(0, 32) == 'https://shop.luvmehair.com/blogs'){
+        pageGroup = 'Blog Page'
+      }else if(window.location.href.substr(0, 31) == 'https://shop.luvmehair.com/cart'){
+        pageGroup = 'Cart Page'
+      }else if(window.location.href.substr(0, 45) == 'https://shop.luvmehair.com/24658681/checkouts'){
+        pageGroup = 'Checkout Page'
+      }else if(window.location.href == 'https://shop.luvmehair.com/'|| window.location.href.substr(0, 28) == 'https://shop.luvmehair.com/?'){
+        pageGroup = 'Home Page'
+      }else if(window.location.href.substr(0, 33) == 'https://shop.luvmehair.com/search'){
+        pageGroup = 'Search Page'
+      }else if(window.location.href.indexOf("products")>0){
+        pageGroup = 'Product Detail Page'
+      }else if(window.location.href.substr(0, 38) == 'https://shop.luvmehair.com/collections'){
+        pageGroup = 'Product List Page'
+      }else if(window.location.href.substr(0, 32) == 'https://shop.luvmehair.com/pages'){
+        pageGroup = 'Costorm Pages'
+      }else if(window.location.href == 'https://support.luvmehair.com/'){
+        pageGroup = 'Track Oders Page'
+      }else if(window.location.href.substr(0, 43) == 'https://shop.luvmehair.com/24658681/orders/'){
+        pageGroup = 'Thanks Page'
+      }else if(window.location.href.substr(0, 37) == 'https://shop.luvmehair.com/gift_cards'){
+        pageGroup = 'Gift Cards Page'
+      }else{
+        pageGroup = 'Other Pages'
+      }
+      // 客户与游客的区别
+      let logins = '';
+      logins = {{ customer.id | json }};
+      localStorage.setItem("tock_log", logins);
+      let aseKey = "ABCD1234"//秘钥必须为：8/16/32位
+      if(logins !== null){
+      //加密 DES/AES切换只需要修改 CryptoJS.AES <=> CryptoJS.DES
+      let login = CryptoJS.AES.encrypt(logins.toString(), CryptoJS.enc.Utf8.parse(aseKey), {
+        mode: CryptoJS.mode.ECB,
+        padding: CryptoJS.pad.Pkcs7
+      }).toString();
+      dataLayer.push({
+        'UserID': login, 
+        'UserType': 'Member',
+        'page_group': pageGroup, 
+      })
+    }else{
+      dataLayer.push({
+        'UserID': '', 
+        'UserType': 'Guest',
+        'page_group': pageGroup, 
+      })
+    }
+  // Pay Now 63
+  $('.shown-if-js>#continue_button').click(function(){
+    var a = $('.step .step__sections>.edit_checkout>.section--payment-method>.section__content .content-box').children('div').eq(2).attr('class')
+    var b = $('.step .step__sections>.edit_checkout>.section--payment-method>.section__content .content-box').children('div').eq(4).attr('class')
+	var c = $('.step .step__sections>.edit_checkout>.section--payment-method>.section__content .content-box').children('div').eq(6).attr('class')
+    var d = $('.step .step__sections>.edit_checkout>.section--payment-method>.section__content .content-box').children('div').eq(8).attr('class')
+    var e = $('.step .step__sections>.edit_checkout>.section--payment-method>.section__content .content-box').children('div').eq(10).attr('class')
+    var option = ''
+    if(a == 'radio-wrapper content-box__row content-box__row--secondary card-fields-container card-fields-container--loaded card-fields-container--transitioned'){
+    	option = 'Credit card'
+    }else if(b == 'radio-wrapper content-box__row content-box__row--secondary'){
+    	option = '4 interest-free payments'
+    }else if(c == 'radio-wrapper content-box__row content-box__row--secondary'){
+    	option = 'paypal' 
+    }else if(d == 'radio-wrapper content-box__row content-box__row--secondary'){
+    	option = 'Buy now, pay later with Klarna'
+    }else if(e == 'radio-wrapper content-box__row content-box__row--secondary'){
+    	option = 'Zip - Pay in 4 (Quadpay)'
+    }
+    var coupon = ''
+    var discount = ''
+    {% for discount_application in checkout.discount_applications %}
+      discount = '{{ discount_application.title }}'
+    {% endfor %}
+    coupon = discount
+    var value_num = '{{checkout.total_price | money_without_currency }}'.replace(/,/g,'')
+    var product_subtotal = '{{checkout.line_items_subtotal_price | money_without_currency }}'.replace(/,/g,'')
+  	window.dataLayer.push({
+      'event': 'eeEvent',
+      "event_type": "add_payment_info",
+      "ecommerce": {
+        "currency": 'USD',
+        "value": Number(value_num),
+        "product_subtotal": Number(product_subtotal),
+        "coupon": coupon,
+        "coupon_discount": {{checkout.discounts_amount | money_without_currency }},
+        "giftcard": {{checkout.gift_cards_amount | money_without_currency }},
+        "shipping": {{checkout.shipping_price | money_without_currency }},
+        "shipping_tier": '{{checkout.shipping_method.title}}',
+        "payment_type": option,
+        "transaction_id": '{{checkout.order_number}}',
+        "event_label": '{{checkout.order_number}}',
+        "items": [
+          {%- for item in checkout.line_items -%}
+              {
+              "item_category": "{{item.product.type}}",
+              "item_id": {{item.product.id}},
+              "item_name": "{{item.product.title}}",
+              "item_variant": "{{item.variant.sku}}",
+              "item_category5": "{{item.variant.sku}}",
+              "item_brand": "{{item.variant.title}}",
+              "price": {{item.price | money_without_currency}},
+              "quantity": {{item.quantity}},
+              "currency": 'USD',
+            },
+          {%- endfor -%}
+        ]
+      }
+    })
+  })
+  // 72 77 83
+  $('.step__footer__previous-link').click(function(){
+    var title = $('.step__footer__previous-link .step__footer__previous-link-content').text()
+    if(title == 'Return to cart'){
+      window.dataLayer.push({
+        'event': 'uaEvent',
+        "event_type": "return_to_cart",
+      })
+    }else if(title == 'Return to information'){
+      window.dataLayer.push({
+        'event': 'uaEvent',
+        "event_type": "return_to_information",
+      })
+    }else if(title == 'Return to shipping'){
+      window.dataLayer.push({
+        'event': 'uaEvent',
+        "event_type": "return_to_shipping",
+      })
+    }
+  })
+  // 78
+  $('#continue_button').click(function(){
+    var name = $('#continue_button .btn__content').text()
+    var value_num = '{{checkout.total_price | money_without_currency }}'.replace(/,/g,'')
+    var product_subtotal = '{{checkout.line_items_subtotal_price | money_without_currency }}'.replace(/,/g,'')
+    var coupon = ''
+    var discount = ''
+    {% for discount_application in checkout.discount_applications %}
+      discount = '{{ discount_application.title }}'
+    {% endfor %}
+    coupon = discount
+    if(name == 'Continue to payment'){
+      window.dataLayer.push({
+        'event': 'eeEvent',
+        "event_type": "add_shipping_info",
+        "ecommerce": {
+            "currency": 'USD',
+            "value": Number(value_num),
+            "product_subtotal": Number(product_subtotal),
+            "coupon": coupon,
+            "coupon_discount": {{checkout.discounts_amount | money_without_currency }},
+            "giftcard": {{checkout.gift_cards_amount | money_without_currency }},
+            "shipping": {{checkout.shipping_price | money_without_currency }},
+            "shipping_tier": '{{checkout.shipping_method.title}}',
+            "transaction_id": '{{checkout.order_number}}',
+            "event_label": '{{checkout.order_number}}',
+            "items": [
+              {%- for item in checkout.line_items -%}
+                  {
+                  "item_category": "{{item.product.type}}",
+                  "item_id": {{item.product.id}},
+                  "item_name": "{{item.product.title}}",
+                  "item_variant": "{{item.variant.sku}}",
+                  "item_category5": "{{item.variant.sku}}",
+                  "item_brand": "{{item.variant.title}}",
+                  "price": {{item.price | money_without_currency}},
+                  "quantity": {{item.quantity}},
+                  "currency": 'USD',
+                },
+              {%- endfor -%}
+            ]
+          }
+      })
+    }
+  })
+  //81
+  $('.section--billing-address .radio__input').click(function(){
+    // var name = document.querySelector('#checkout_different_billing_address_true').checked
+    var label = $.trim($(this).siblings('.radio__label.content-box__emphasis').text())
+    window.dataLayer.push({
+      'event': 'uaEvent',
+      "event_type": "select_billing_address",
+      "event_label":label,
+    })
+  })
+  //  支付成功页加载
+  $(document).ready(function(){
+    var coupon = ''
+    var discount = ''
+    {% for discount_application in checkout.discount_applications %}
+      discount = '{{ discount_application.title }}'
+    {% endfor %}
+    coupon = discount
+    var url = window.location.href;
+    var index = url.lastIndexOf("\/");
+    str = url.substring(index + 1,url.length);
+    var match = window.location.pathname.match(/checkouts\/(.+)\/(thank_you|post_purchase)/);
+    var token = match? match[1]: undefined;
+//     if(str == 'thank_you'){
+//     window.onpageshow = function (event) {
+//     if (event.persisted || (window.performance && window.performance.navigation.type == 2)) {
+       if (window.performance && window.performance.navigation.type == 2) {
+          // 页面是通过后退进来的
+          console.log("浏览订单页")
+       }else{// 页面是通过链接跳转进来的
+          if (token != undefined){
+             var value_num = '{{checkout.total_price | money_without_currency }}'.replace(/,/g,'')
+             var product_subtotal = '{{checkout.line_items_subtotal_price | money_without_currency }}'.replace(/,/g,'')
+             window.dataLayer.push({
+                'event': 'eeEvent',
+                "event_type": "purchase",
+                "ecommerce": {
+                  "currency": 'USD',
+                  "value": Number(value_num),
+                  "product_subtotal": Number(product_subtotal),
+                  "coupon": coupon,
+                  "coupon_discount": {{checkout.discounts_amount | money_without_currency }},
+                  "giftcard": {{checkout.gift_cards_amount | money_without_currency }},
+                  "shipping": {{checkout.shipping_price | money_without_currency }},
+                  "shipping_tier": '{{checkout.shipping_method.title}}',
+                  "transaction_id": '#LM'+'{{checkout.order_number}}',
+                  "event_label":'{{checkout.id}}',
+                  "items": [
+                    {%- for item in checkout.line_items -%}
+                        {
+                        "item_category": "{{item.product.type}}",
+                        "item_id": {{item.product.id}},
+                        "item_name": "{{item.product.title}}",
+                        "item_variant": "{{item.variant.sku}}",
+                        "item_category5": "{{item.variant.sku}}",
+                        "item_brand": "{{item.variant.title}}",
+                        "price": {{item.price | money_without_currency}},
+                        "quantity": {{item.quantity}},
+                        "currency": 'USD',
+                      },
+                    {%- endfor -%}
+                  ]
+                }
+            });
+          } 
+       }
+//   }
+  })
+  </script> 
+
+<script>
+  var lengt = $('.tags-list .tag').length
+//   console.log(lengt)
+  function timers(){
+  	var lengt = $('.tags-list .tag').length
+    if(lengt >= 2){
+      $(".order-summary__section--discount .edit_checkout .fieldset").css({"display":"none"})
+//       $(".sidebar .animate-floating-labels .fieldset").css({"display":"none"})
+    }
+  }
+  function timer(){
+  	var lengt = $('.tags-list .tag').length
+    if(lengt >= 4){
+      $(".order-summary__section--discount .edit_checkout .fieldset").css({"display":"none"})
+      $(".animate-floating-labels .fieldset").css({"display":"none"})
+      $(".radio-wrapper .fieldset").css({"display":"block"})
+	  $(".radio-group__row .fieldset").css({"display":"block"})
+    }
+  }
+  $(document).ready(function() {
+    var url = location.search; //包括问号;
+    url.substr(0,1)
+//     console.log(url)
+//     console.log(url.substr(0,1))
+    if (url.indexOf("?") !=-1) {
+     url.substr(1)
+     url.substr(1).substr(0,1) 
+//      console.log(url.substr(1).substr(0,1))
+    } 
+    if(url == '' || url.substr(0,1) == '?'){
+      timer();
+      timers();
+      setInterval('timer()', 1)
+      setInterval('timers()', 1)
+    }
+  })
+</script>
+</html>

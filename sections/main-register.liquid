@@ -1,0 +1,80 @@
+<div class="container fully-spaced-row">
+  <div id="template" class="small-form" data-cc-animate>
+    <div id="customer">
+      <!-- Create Customer -->
+      <div id="create-customer">
+        <div class="template_header">
+          <h2 class="title">{{ 'customer.register.title' | t }}</h2>
+        </div>
+
+        {% form 'create_customer' %}
+          {{ form.errors | default_errors }}
+
+          <div class="input-row">
+            <label for="first_name" class="login">{{ 'customer.register.first_name' | t }}</label>
+            <input type="text" value="" name="customer[first_name]" id="first_name" class="large" size="30" />
+          </div>
+
+          <div class="input-row">
+            <label for="last_name" class="login">{{ 'customer.register.last_name' | t }}</label>
+            <input type="text" value="" name="customer[last_name]" id="last_name" class="large" size="30" />
+          </div>
+
+          <div class="input-row">
+            <label for="email" class="login">{{ 'customer.register.email' | t }}</label>
+            <input type="email" value="" name="customer[email]" id="email" class="large hete-email-row" size="30" />
+          </div>
+
+          <div class="input-row">
+            <label for="password" class="login">{{ 'customer.register.password' | t }}</label>
+            <input type="password" value="" name="customer[password]" id="password" class="large password" size="30" />
+          </div>
+
+          <div class="action_bottom hete-Function-bottom">
+            <button class="btn hete-btn-submit" type="submit" onclick="registerSaveEmail()">{{ 'customer.register.submit' | t }}</button>
+            <span class="note">
+              <a href="{{ routes.account_login_url }}">{{ 'customer.register.log_in' | t }}</a>
+              {{ 'customer.general.or' | t }}
+              <a href="{{ routes.root_url }}">{{ 'customer.register.cancel' | t }}</a>
+            </span>
+          </div>
+        {% endform %}
+      </div><!-- /#create-customer -->
+    </div>
+  </div>
+</div>
+
+<script>
+  var errors = document.querySelector('.errors')
+  // 判断错误是否抛出,抛出则意味着注册错误
+  if(errors){
+    dataLayer.push({
+      'event': 'uaEvent',
+      'event_type': 'create_account',
+      'input': localStorage.getItem("registerEmail"),
+      'error_info': $(".errors").find("li").text(),
+    })
+    // console.log(errors,$(".errors").find("li").text(), localStorage.getItem("registerEmail"),2222)
+  }
+
+  // 保存用户注册邮箱
+  function registerSaveEmail(){
+    dataLayer.push({
+      'event': 'uaEvent',
+      'event_type': 'sign_up_fail',
+    })
+    var user_email = $('#email').val()
+    var aseKey = "ABCD1234"//秘钥必须为：8/16/32位
+    var userEmail = CryptoJS.AES.encrypt(user_email.toString(), CryptoJS.enc.Utf8.parse(aseKey), {
+          mode: CryptoJS.mode.ECB,
+          padding: CryptoJS.pad.Pkcs7
+    }).toString();
+    localStorage.setItem('registerEmail', userEmail)
+  }
+</script>
+
+{% schema %}
+  {
+    "name": "Customer register"
+  }
+{% endschema %}
