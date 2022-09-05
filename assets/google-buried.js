@@ -131,7 +131,15 @@
 			case 'navigation_recommendation':
 				return initNavigationRecommendation(params)
 			case 'swymWishlist':
-				return initSwymWishlist(params)
+				initSwymWishlist(params)
+				clickWishlist()
+				return true
+			case 'owlCarousel2':
+				return window.buried32()
+			case 'galleryViewerChange':
+				return window.buried33B(params)
+			case 'slideshowAfterChange':
+				return window.buried33A(params)
 		}
 	}
 
@@ -381,6 +389,29 @@
 					ecommerce,
 				})
 			})
+
+			let imagePageButtonTime = 0
+			item.querySelectorAll('.image-page-button')?.forEach(res => {
+				res.addEventListener('click', () => {
+					clearTimeout(imagePageButtonTime)
+					imagePageButtonTime = setTimeout(() => {
+						console.log(item.querySelector('.product-block__image--show-on-hover'))
+						const currentDom = item.querySelector('.product-block__image--show-on-hover')
+						const { ecommerce } = setViewItemList41Buried([item])
+						const buriedData = {
+							event: 'uaEvent',
+							event_type: 'window_map_arrow',
+							event_label: currentDom.querySelector('img').currentSrc,
+							position:`related_${currentDom.dataset.imageIndex}`,
+						    product_name: ecommerce.items[0].item_name,
+						    product_id: ecommerce.items[0].item_id
+						}
+						console.log('window_map_arrow 43', buriedData)
+						dataLayer.push(buriedData)
+					}, 50)
+				})
+			})
+
 		})
 	}
 	if (viewItemList41 && viewItemList41.length) {
@@ -1093,6 +1124,23 @@
 						})
 					})
 				})
+
+				const moreDetailList = document.querySelectorAll(
+					'.swym-wishlist-product-detail-container .swym-more-details-btn',
+				)
+				moreDetailList.forEach((item) => {
+					item.addEventListener('click', () => {
+						const { ecommerce } = setBuriedSwymWishlist([detailDom])
+						const buriedData = {
+							event_type: `more_detail`,
+							event_label: 'wishlist_MoreDetail',
+							product_id: ecommerce?.items[0]?.item_id || '',
+							product_name: ecommerce?.items[0]?.item_name || ''
+						}
+						console.log('more_detail 114', buriedData)
+						dataLayer.push(buriedData)
+					})
+				})
 			}, 10)
 		}
 
@@ -1102,7 +1150,7 @@
 			let isInit = false
 			let isChange = false
 			var container = document.querySelector('.swym-simple-wishlist-container-content')
-			container.addEventListener(
+			container?.addEventListener(
 				'DOMSubtreeModified',
 				function (e) {
 					const classData = container.querySelector('.swym-wishlist-detail').classList
@@ -1195,4 +1243,15 @@
 	}
 
 	initProductSort()
+
+
+	function clickWishlist() {
+		dataLayer.push({
+			event: 'uaEvent',
+			event_type: 'top_function',
+			event_label: 'wishlist',
+		})
+		console.log('clickWishlist')
+
+	}
 })(theme.jQuery)

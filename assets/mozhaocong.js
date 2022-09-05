@@ -223,6 +223,225 @@
 			})
 		})
 	}
-
 	viewItemList120()
+
+
+	const product = window.ShopifyAnalytics?.meta?.product
+	console.log('product', product)
+
+
+
+
+
+	let clickBuried32 = false
+	window.buried32 = function () {
+		const dom32 = document.querySelectorAll('.gallery__inner.sticky-content-container .thumbnails .owl-stage-outer .owl-item ') || []
+		dom32.forEach((item, index) => {
+			const uuidA = initUuid()
+			item.addEventListener('click', () => {
+				clickBuried32 = true
+				if (repeatClick(uuidA)) return
+				const buriedData = {
+					event: 'uaEvent',
+					event_type: 'small_carousel_switch',
+					event_label: item.querySelector('img').currentSrc,
+					position: index + 1,
+					product_name: document.querySelector('.title.hete-title-h1').innerText,
+					product_id: product.id
+				}
+				console.log('buried32', buriedData)
+				dataLayer.push(buriedData)
+			})
+		})
+	}
+
+
+
+
+	let buried33ACurrent = 0
+	window.buried33A = (params) => {
+		console.log('clickBuried32', clickBuried32, buried33ACurrent, params.current )
+		if(buried33ACurrent === params.current || clickBuried32){
+			clickBuried32 = false
+			return
+		}
+		buried33ACurrent = params.current
+		const buriedData = {
+			event: 'uaEvent',
+			event_type: 'small_carousel_switch',
+			event_label: document.querySelector('.main-image .slick-active img').currentSrc,
+			position: buried33ACurrent + 1,
+			product_name: document.querySelector('.title.hete-title-h1').innerText,
+			product_id: product.id
+		}
+		console.log('buried33A', buriedData)
+		dataLayer.push(buriedData)
+	}
+
+	window.buried33B = (params) => {
+		let position = 0
+		params.dom[0].querySelectorAll('.gallery-viewer__thumb')?.forEach((item, index) => {
+			if(item.className.includes('gallery-viewer__thumb--active')) {
+				console.log('index', index)
+				position = index + 1
+			}
+		})
+		const buriedData = {
+			event: 'uaEvent',
+			event_type: 'small_carousel_switch',
+			event_label: document.querySelector('.gallery-viewer__zoom-container img').currentSrc,
+			position: position + 1,
+			product_name: document.querySelector('.title.hete-title-h1').innerText,
+			product_id: product.id
+		}
+		console.log('buried33A', buriedData)
+		dataLayer.push(buriedData)
+	}
+
+
+
+	const contactUs125 =  document.querySelector('.shopify-section.page-section-spacing')
+	// console.log('contactUs125', contactUs125)
+
+	let contactUs125DOMNodeInserted = 0
+	contactUs125?.addEventListener('DOMNodeInserted', function () {
+		clearTimeout(contactUs125DOMNodeInserted)
+		contactUs125DOMNodeInserted = setTimeout(() => {
+			 if(!document.querySelector('.result.hairstylist')) return
+			 contactUs125?.querySelector('.hairlist')?.addEventListener('click', () => {
+				 const buriedData = {
+					 event: 'uaEvent',
+					 event_type: 'contact_us',
+					 eventLabel: 'Luvme Email'
+				 }
+				 console.log('contactUs125', buriedData)
+				 dataLayer.push(buriedData)
+			})
+
+
+			contactUs125?.querySelectorAll('#mytree li a')?.forEach(item => {
+				item?.addEventListener('click', () => {
+					const buriedData = {
+						event: 'uaEvent',
+						event_type: 'contact_us',
+						eventLabel: 'phone_' + (item?.innerText || '')
+					}
+					console.log('contactUs126', buriedData)
+					dataLayer.push(buriedData)
+				})
+			})
+			console.log('DOMNodeInserted DOMNodeInserted DOMNodeInserted')
+		}, 500)
+	}, false);
+
+
+
+	const oneTopList =  contactUs125?.querySelectorAll('.top.one_top') || []
+	oneTopList.forEach(item => {
+		item?.addEventListener('click', () => {
+			const accordionStatus  = item.className?.includes('off') ? '收起' : '展开'
+			const buriedData = {
+				event: 'uaEvent',
+				event_type: `accordion_${accordionStatus}`,
+				eventLabel: item?.querySelector('p')?.innerText || ''
+			}
+			console.log('accordion_$accordionStatus127', buriedData)
+			dataLayer.push(buriedData)
+		})
+	})
+	const twoTopList =  contactUs125?.querySelectorAll('.top.two_top') || []
+	twoTopList.forEach(res => {
+		res?.addEventListener('click', () => {
+			const accordionStatus  = res.querySelector('img').className?.includes('off') ? '收起' : '展开'
+			const buriedData = {
+				event: 'uaEvent',
+				event_type: `accordion_${accordionStatus}`,
+				eventLabel: res?.querySelector('p')?.innerText || ''
+			}
+			console.log('accordion_$accordionStatus128', buriedData)
+			dataLayer.push(buriedData)
+		})
+	})
+	const threeTopList =  contactUs125?.querySelectorAll('.top.three_top') || []
+	threeTopList.forEach(res => {
+		res?.addEventListener('click', () => {
+			const accordionStatus  = res.querySelector('img').className?.includes('off') ? '收起' : '展开'
+			const buriedData = {
+				event: 'uaEvent',
+				event_type: `accordion_${accordionStatus}`,
+				eventLabel: res?.querySelector('p')?.innerText || ''
+			}
+			console.log('accordion_$accordionStatus129', buriedData)
+			dataLayer.push(buriedData)
+		})
+	})
+
+
+	const botList =  document.querySelectorAll('.one_ol .bot') || []
+	botList.forEach(item => {
+		item.querySelector('a').addEventListener('click', () => {
+			const buriedData = {
+				event: 'uaEvent',
+				event_type: `question_function`,
+				eventLabel: 'Still have problem?'
+			}
+			console.log('question_function', buriedData)
+			dataLayer.push(buriedData)
+		})
+		item.querySelector('span').addEventListener('click', () => {
+			const buriedData = {
+				event: 'uaEvent',
+				event_type: `question_function`,
+				eventLabel: 'Helpful'
+			}
+			console.log('question_function', buriedData)
+			dataLayer.push(buriedData)
+		})
+	})
+
+
+
+	// 判断页面是否博客页面
+	if(window.location.href.includes('/blogs/')) {
+		const content =  document.querySelector('#content')
+		const aList = content.querySelectorAll('a')
+		console.log('aList', aList)
+		aList.forEach((item, index) => {
+			const uuidA = initUuid()
+			item.setAttribute('data-setMarkIndex', index + 1)
+			item.addEventListener('click', () => {
+				if (repeatClick(uuidA)) return
+				const buriedData = {
+					event: 'uaEvent',
+					event_type: `view_blog_list`,
+					event_label: item.href || ''
+				}
+				console.log('blog_link_entrance', buriedData)
+				dataLayer.push(buriedData)
+			})
+		})
+		exposureBuried({
+			domList: aList,
+			setMark(target, index) {
+				const { setmarkindex } = target.dataset
+				return setmarkindex
+			},
+			setBuried(data = []) {
+				data.forEach(item => {
+					const buriedData = {
+						event: 'uaEvent',
+						event_type: `view_blog_list`,
+						event_label: item.href || ''
+					}
+					console.log('view_blog_list', buriedData)
+					dataLayer.push(buriedData)
+				})
+			},
+		})
+	}
+
+
+
+
+
 })(theme.jQuery)

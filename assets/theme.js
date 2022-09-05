@@ -3783,8 +3783,12 @@
         });
 
         // event: next thumbnail
-        $allContainer.on('click.galleryViewer', '.gallery-viewer__next', function (evt) {
+        $allContainer.on('click.galleryViewer', '.gallery-viewer__next', function (evt ) {
             evt.preventDefault();
+            console.log('图片点击下一个 gallery-viewer__prev', evt)
+            if(window.setGoogleBuried) {
+                window.setGoogleBuried({type:'galleryViewerChange', dom:$thumbContainer, evt })
+            }
             var $next = $thumbContainer.find('.gallery-viewer__thumb--active').next();
             if ($next.length === 0) {
                 $next = $thumbContainer.find('.gallery-viewer__thumb:first');
@@ -3795,6 +3799,10 @@
         // event: previous thumbnail
         $allContainer.on('click.galleryViewer', '.gallery-viewer__prev', function (evt) {
             evt.preventDefault();
+            console.log('图片点击上一个 gallery-viewer__prev', evt)
+            if(window.setGoogleBuried) {
+                window.setGoogleBuried({type:'galleryViewerChange', dom:$thumbContainer, evt })
+            }
             var $prev = $thumbContainer.find('.gallery-viewer__thumb--active').prev();
             if ($prev.length === 0) {
                 $prev = $thumbContainer.find('.gallery-viewer__thumb:last');
@@ -4394,6 +4402,11 @@
             }).on('beforeChange', function (evt, slick, current, next) {
                 var mediaId = $(slick.$slides[next]).data('media-id');
                 $($(this).closest('.gallery').find('.thumbnails:not(.hidden) .thumbnail[data-media-id="' + mediaId + '"]')).trigger('selectFromSlick');
+            }).on('afterChange', function (evt, slick, current, next) {
+                console.log('图片切换按钮点击 $slideshow afterChange', evt, slick, current)
+                if(window.setGoogleBuried) {
+                    window.setGoogleBuried({type:'slideshowAfterChange', evt, slick, current})
+                }
             });
 
             if ($slideshow.closest('.gallery--layout-carousel-beside, .gallery--layout-carousel-under').length) {
@@ -4532,6 +4545,9 @@
                             rtl: document.querySelector('html[dir=rtl]') ? true : false });
                         console.log('owlCarousel2')
 
+                        if(window.setGoogleBuried) {
+                            window.setGoogleBuried({type:'owlCarousel2'})
+                        }
 
                         // trigger variant image grouping
                         $gallery.closest('.product-detail').find('.original-selector').trigger('change');
