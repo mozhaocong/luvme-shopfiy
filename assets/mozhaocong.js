@@ -442,6 +442,39 @@
 
 
 
+	const uuid112 = initUuid()
+	document.querySelector('.section-newsletter .signup-form__button')?.addEventListener('click', (e) => {
+		const data = document.querySelector('.section-newsletter .signup-form__email').value || ''
+		if(!data)  {
+		  return
+		}
+		if (repeatClick(uuid112)) return
 
+		const buriedData = {
+			event: 'uaEvent',
+			event_type: `subscirbe`,
+			eventLabel:  CryptoJS.AES.encrypt(data.toString(), CryptoJS.enc.Utf8.parse(aseKey), {
+				mode: CryptoJS.mode.ECB,
+				padding: CryptoJS.pad.Pkcs7
+			}).toString()
+		}
+		console.log('subscirbe 122', buriedData)
+		dataLayer.push(buriedData)
+	})
+
+
+	const article = document.querySelector('#content .article-buried .rte')
+	console.log('article', article)
+	article?.querySelectorAll('a')?.forEach(item => {
+		item.addEventListener('click', (e) => {
+			const buriedData = {
+				event: 'uaEvent',
+				event_type: `page_link_entrance`,
+				eventLabel:  e.target.href || ''
+			}
+			console.log('page_link_entrance 117', buriedData)
+			dataLayer.push(buriedData)
+		})
+	})
 
 })(theme.jQuery)
