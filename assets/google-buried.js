@@ -391,23 +391,56 @@
 			})
 
 			let imagePageButtonTime = 0
+
+			function windowMapArrow43(item, type) {
+
+				let currentDom = {}
+				if (type === 'click') {
+					currentDom = item.querySelector('.product-block__image.product-block__image--show-on-hover') || {}
+				} else {
+					currentDom = item.querySelector('.product-block__image.product-block__image--active') || {}
+				}
+
+				// const currentDom = item.querySelector('.product-block__image--show-on-hover')
+				const { ecommerce } = setViewItemList41Buried([item])
+				const buriedData = {
+					event: 'uaEvent',
+					event_type: 'window_map_arrow',
+					event_label: currentDom?.querySelector('img').currentSrc,
+					position:`related_${currentDom?.dataset.imageIndex}`,
+					product_name: ecommerce.items[0].item_name,
+					product_id: ecommerce.items[0].item_id
+				}
+				console.log('window_map_arrow 43', buriedData)
+				dataLayer.push(buriedData)
+			}
+
+			if (document.body.clientWidth < 1000) {
+				console.log('监听拖动事件')
+				item.querySelector('.image-cont.image-cont--with-secondary-image')?.addEventListener('touchend', () => {
+					setTimeout(() => {
+						windowMapArrow43(item, 'touchend')
+					}, 10)
+				})
+			}
+
 			item.querySelectorAll('.image-page-button')?.forEach(res => {
 				res.addEventListener('click', () => {
 					clearTimeout(imagePageButtonTime)
 					imagePageButtonTime = setTimeout(() => {
-						console.log(item.querySelector('.product-block__image--show-on-hover'))
-						const currentDom = item.querySelector('.product-block__image--show-on-hover')
-						const { ecommerce } = setViewItemList41Buried([item])
-						const buriedData = {
-							event: 'uaEvent',
-							event_type: 'window_map_arrow',
-							event_label: currentDom.querySelector('img').currentSrc,
-							position:`related_${currentDom.dataset.imageIndex}`,
-						    product_name: ecommerce.items[0].item_name,
-						    product_id: ecommerce.items[0].item_id
-						}
-						console.log('window_map_arrow 43', buriedData)
-						dataLayer.push(buriedData)
+						windowMapArrow43(item, 'click')
+						// const currentDom = item.querySelector('.product-block__image--show-on-hover')
+						// const { ecommerce } = setViewItemList41Buried([item])
+						// const buriedData = {
+						// 	event: 'uaEvent',
+						// 	event_type: 'window_map_arrow',
+						// 	event_label: currentDom.querySelector('img').currentSrc,
+						// 	position:`related_${currentDom.dataset.imageIndex}`,
+						//     product_name: ecommerce.items[0].item_name,
+						//     product_id: ecommerce.items[0].item_id
+						// }
+						// console.log('window_map_arrow 43', buriedData)
+						// dataLayer.push(buriedData)
 					}, 50)
 				})
 			})
@@ -956,7 +989,7 @@
 				})
 				const uuidB = initUuid()
 				// 收藏点击事件 add_to_wishlistNavigationRecommendation
-				item.querySelector('.swym-button.swym-add-to-wishlist-view-product')?.addEventListener('click', (e) => {
+				item.querySelector('.swym-button.swym-add-to-wishlist-view-product')?.addEventListener('change', (e) => {
 					e.preventDefault()
 					e.stopPropagation()
 					console.log('click add_to_wishlistNavigationRecommendation')
